@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-4" v-for="(menuItem, index) in menuItems" :key="index">
         <div class="card mb-4">
-          <img :src="menuItem.image" class="card-img-top" alt="menu Item Image">
+          <!-- <img :src="menuItem.image" class="card-img-top" alt="menu Item Image"> -->
           <div class="card-body">
             <h5 class="card-title">{{ menuItem.itemName }}</h5>
             <p class="card-text">{{ menuItem.diningStation }}</p>
@@ -12,10 +12,12 @@
           </div>
           <div class="card-footer">
             <button class="btn btn-primary btn-block">Add to Cart</button>
+            
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -41,7 +43,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /* Add custom styling here if needed */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

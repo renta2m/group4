@@ -1,6 +1,7 @@
 package com.gfour.ccoms.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,8 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("/login")
-    public LoginDTO login(@RequestBody LoginDTO loginDTO) throws Exception{
-        return this.loginService.login(loginDTO);
+    @PostMapping("")
+    public ResponseEntity<LoginDTO> login(@RequestBody LoginDTO loginDTO) throws Exception{
+        return  ResponseEntity.ok(this.loginService.login(loginDTO));
     }
 }

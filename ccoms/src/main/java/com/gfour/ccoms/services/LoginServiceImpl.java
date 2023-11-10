@@ -22,9 +22,9 @@ public class LoginServiceImpl implements LoginService {
         Employee employee = null;
 
         if (loginDTO.getDesignation().equals("student")) {
-            student = studentRepo.findByGlobalIdAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
+            student = studentRepo.findByGlobalIDAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
         } else {
-            employee = employeeRepo.findByEmailIdAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
+            employee = employeeRepo.findByEmailIDAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
         }
 
         if (student == null && employee == null) {

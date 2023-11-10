@@ -1,21 +1,18 @@
 <template>
   <div id="app">
     <NavBar />
-    <MenuItems />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import MenuItems from './components/MenuItems.vue'
 import NavBar from './components/NavBar.vue'
-
 
 export default {
   name: 'App',
   components: {
-    MenuItems,
     NavBar
-  }
+}
 }
 </script>
 

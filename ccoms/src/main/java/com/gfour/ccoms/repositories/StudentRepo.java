@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.gfour.ccoms.entities.Student;
 
 public interface StudentRepo extends CrudRepository<Student, Integer> {
-    Student findByGlobalIdAndPassword(String globalId, String password);
+    Student findByGlobalIDAndPassword(String globalId, String password);
 
 }
