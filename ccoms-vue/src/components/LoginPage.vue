@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
     <h2 class="text-center mb-4 text-light">Login</h2>
-    
+
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card gold-background">
@@ -17,11 +17,12 @@
             </div>
 
             <fieldset class="mb-3">
-              
+
               <div class="form-check">
                 <div class="row">
                   <div class="col-auto">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="student" v-model="designation" value="student" checked>
+                    <input class="form-check-input" type="radio" name="gridRadios" id="student" v-model="designation"
+                      value="student" checked>
                   </div>
                   <div class="col-auto">
                     <label class="form-check-label text-dark" for="student">Student</label>
@@ -31,7 +32,8 @@
               <div class="form-check">
                 <div class="row">
                   <div class="col-auto">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="employee" v-model="designation" value="employee">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="employee" v-model="designation"
+                      value="employee">
                   </div>
                   <div class="col-auto">
                     <label class="form-check-label text-dark" for="employee">Employee</label>
@@ -49,14 +51,13 @@
 </template>
 
 <script>
-import LoginService from '../services/LoginService'; // Adjust the path based on your project structure
-
+import LoginService from '../services/LoginService';
 export default {
   data() {
     return {
       username: '',
       password: '',
-      designation:'',
+      designation: ''
     };
   },
   methods: {
@@ -69,16 +70,18 @@ export default {
 
       LoginService.login(credentials)
         .then(response => {
-          // Handle successful login (e.g., store authentication token)
-        
-          console.log('Login successful', response.data);
-          this.$router.push("/menu-items").catch(()=>{});
-                })
+          sessionStorage.setItem("userName", response.data.userName);
+          sessionStorage.setItem("designation", response.data.designation);
+
+          if (response.data.designation === 'student') {
+            this.$router.push("/menu-items").catch(() => { });
+          } else {
+            this.$router.push("/orders").catch(() => { });
+          }
+        })
         .catch(error => {
-          // Handle login error
           console.error('Error during login:', error);
         });
-        //this.$router.push('/menu-items');
     },
   },
 };
@@ -93,6 +96,7 @@ body {
 
 .card.gold-background {
   background-color: gold;
-  color: black; /* Set the text color to ensure readability */
+  color: black;
+  /* Set the text color to ensure readability */
 }
 </style>

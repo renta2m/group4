@@ -68,12 +68,12 @@ export default {
 }
 
 .btn {
-  background-color: #007bff;
+  background-color: maroon;
   color: #fff;
   border: none;
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: rgb(152, 1, 1);
 }
 </style>
