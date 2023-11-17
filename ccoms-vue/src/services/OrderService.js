@@ -6,6 +6,10 @@ class OrderService {
     getOrders() {
         return axios.get(ORDER_API + 'all');
     }
+
+    updateOrderStatus(id, orderStatus) {
+       return axios.post(ORDER_API + 'update-status/' + id+'/'+ orderStatus,{}); 
+    }
 }
 
 export default new OrderService()

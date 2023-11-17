@@ -10,6 +10,7 @@
                     <th>Order Status</th>
                     <th>Total Amount</th>
                     <th>Date</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,11 @@
                     <td>{{ order.ordersStatus.replaceAll("'", "") }}</td>
                     <td>{{ order.totalAmount }}</td>
                     <td>{{ order.createdOn }}</td>
+                    <td>
+                        <button class="btn btn-primary"  v-if="order.ordersStatus==='in preperation'" @click="updateOrderStatus(order, 'packing')">Pack Order</button>
+                        <button class="btn btn-primary" v-else-if="order.ordersStatus === 'packing'" @click="updateOrderStatus(order, 'ready to pick up')">Ready to Pickup</button>
+                        <button class="btn btn-primary" v-else-if="order.ordersStatus === 'ready to pick up'" @click="updateOrderStatus(order, 'delivered')">Delivered</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -37,8 +43,8 @@
             </ul>
         </nav>
     </div>
-</template>
-  
+</template>  
+
 <script>
 import OrderService from '../services/OrderService';
 
@@ -61,10 +67,15 @@ export default {
         },
     },
     methods: {
-        getOrders() {
-            OrderService.getOrders().then((response) => {
-                this.orders = response.data
-            });
+        async getOrders(forceRefresh) {
+            try {
+                const response = await OrderService.getOrders({ forceRefresh });
+                this.orders = response.data;
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                // Handle the error, e.g., show a user-friendly message
+            }
+        
         },
         prevPage() {
             if (this.currentPage > 1) {
@@ -79,10 +90,25 @@ export default {
         goToPage(page) {
             this.currentPage = page;
         },
+        async updateOrderStatus(order, newStatus) {
+            
+                order.loading = true; // Set loading state to true
+                try {
+                    await OrderService.updateOrderStatus(order.id, newStatus);
+                    this.orders = []; // Clear orders array
+                    await this.getOrders(); // Fetch orders after successful update
+                } catch (error) {
+                    console.error('Error updating order status:', error);
+                    // Handle the error, e.g., show a user-friendly message
+                } finally {
+                    order.loading = false; // Set loading state to false after update completes or fails
+                }
+            
+        },
     },
-    created() {
+    mounted() {
         this.getOrders();
-    }
+    },
 };
 </script>
   

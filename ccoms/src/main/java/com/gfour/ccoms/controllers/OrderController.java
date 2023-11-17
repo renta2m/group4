@@ -3,11 +3,10 @@ package com.gfour.ccoms.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gfour.ccoms.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.gfour.ccoms.dtos.OrdersDTO;
 import com.gfour.ccoms.entities.Menu;
@@ -22,6 +21,8 @@ public class OrderController {
     private OrdersRepo ordersRepo;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private OrderService orderService;
     @GetMapping("/all")
     public List<OrdersDTO> getAll() {
         Iterable<Orders>  menuItems = ordersRepo.findAll();
@@ -31,5 +32,10 @@ public class OrderController {
         });
 
         return ordersList;
+    }
+
+    @PostMapping("update-status/{id}/{status}")
+    public void updateOrderStatus(@PathVariable Integer id, @PathVariable String status) {
+        orderService.updateOrderStatus(id, status);
     }
 }
